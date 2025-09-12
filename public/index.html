@@ -7,21 +7,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-800 text-white p-8">
-    <h1 class="text-4xl font-bold text-center text-teal-400 mb-4">Abreu Musics - Seu player de Música favorito</h1>
+    <div class="container mx-auto max-w-2xl">
+        <h1 class="text-4xl font-bold text-center text-teal-400 mb-4">Abreu Musics - Seu player de Música favorito</h1>
 
-    <div class="bg-gray-700 p-4 rounded-lg shadow-lg flex items-center justify-between">
-        <div class="flex items-center">
-            <div class="bg-gray-600 w-12 h-12 rounded-full mr-4"></div>
-            <div>
-                <h3 class="font-bold text-lg">Título da música</h3>
-                <p class="text-sm text-gray-400">Artista Famoso</p>
+        <form id="add-song-form" class="bg-gray-700 p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <label for="titulo" class="block text-sm font-medium mb-1">Título</label>
+                <input type="text" id="titulo" name="titulo" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
             </div>
-        </div>
-        <button class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-full">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path>
-            </svg>
-        </button>
+            <div class="mb-4">
+                <label for="artista" class="block text-sm font-medium mb-1">Artista</label>
+                <input type="text" id="artista" name="artista" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="album" class="block text-sm font-medium mb-1">Álbum</label>
+                <input type="text" id="album" name="album" class="w-full p-2 rounded bg-gray-600 border border-gray-500">
+            </div>
+            <div class="mb-4">
+                <label for="caminho" class="block text-sm font-medium mb-1">Caminho do Arquivo</label>
+                <input type="text" id="caminho" name="caminho" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+            </div>
+            <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+                Salvar música
+            </button>
+        </form>
     </div>
 </body>
 </html>
