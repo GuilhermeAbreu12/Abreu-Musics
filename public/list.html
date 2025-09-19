@@ -9,18 +9,41 @@
 </head>
 <body class="h-screen box-border">
     <main class="flex bg-blue-600 h-full justify-center items-center">
-        <table class="bg-white h-[50vh] text-black">
-            <tr class="p-[20px]">
-                <td>Título</td>
-                <td>fsd</td>
-            </tr>
-            <tr>
-                <td>Artista</td>
-            </tr>
-            <tr>
-                <td>Álbum</td>
-            </tr>
+        <table class="bg-white h-[80vh] w-[50vw] text-black text-center flex">
+            <thead class="w-full">
+                <tr class="w-[100%] p-[20px] flex bg-gray-200 justify-around">
+                    <td>Título</td>
+                    <td>Artista</td>
+                    <td>Álbum</td>
+                </tr>
+            </thead>
+            <tbody id="songs-table-body">
+            </tbody>
         </table>
     </main>
+    <script>
+        async function fetchSongs(){
+            const response = await fetch('http://127.0.0.1:5500/src/list_songs.php');
+            const result = await response.json();
+            const tableBody = document.getElementById('songs-table-body');
+            tableBody.innerHTML = '';
+
+            if (result.status === 'sucesso' && result.data.length > 0){
+                result.data.forEach(song => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-gray-600 hover:bg-gray-600';
+                    row.innerHTML = `
+                        <td class="p-3">${song.titulo}</td>
+                        <td class="p-3">${song.artista}</td>
+                        <td class="p-3">${song.album || 'N/A'}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="3" class="text-center p-4 text-gray-500">Nenhuma música encontrada.</td></tr>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', fetchSongs);
+    </script>    
 </body>
 </html>
