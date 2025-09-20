@@ -38,6 +38,7 @@
                         <td class="p-3">${song.artista}</td>
                         <td class="p-3">${song.album || 'N/A'}</td>
                         <td class="p-3">
+                            <button onclick="editSong(${song.id})" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded text-xs transition-colors duration-200">Editar</button>
                             <button onclick="deleteSong(${song.id})" class="bg-red-500 hover:bg-red-600 text-white font-bold-py-1 px-2 rounded text-xs transition-colors duration-200 ml-2">Excluir</button>
                         </td>
                     `;
@@ -59,6 +60,19 @@
             const result = await response.json();
             alert(result.mensagem);
             fetchSongs();
+        }
+
+        async function editSong(id) {
+            const response = await fetch('http://localhost/Abreu-Musics/src/get_song.php?id${id}');
+            const result = await response.json();
+
+            if (result.status === 'sucesso'){
+                const song = result.data;
+                document.getElementById('edit-titulo').value = song.titulo;
+                document.getElementById('edit-artista').value = song.artista;
+            } else {
+                alert(result.mensagem);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', fetchSongs);
