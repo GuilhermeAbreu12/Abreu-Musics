@@ -15,6 +15,7 @@
                     <td>Título</td>
                     <td>Artista</td>
                     <td>Álbum</td>
+                    <td>Ações</td>
                 </tr>
             </thead>
             <tbody id="songs-table-body">
@@ -36,13 +37,30 @@
                         <td class="p-3">${song.titulo}</td>
                         <td class="p-3">${song.artista}</td>
                         <td class="p-3">${song.album || 'N/A'}</td>
+                        <td class="p-3">
+                            <button onclick="deleteSong(${song.id})" class="bg-red-500 hover:bg-red-600 text-white font-bold-py-1 px-2 rounded text-xs transition-colors duration-200 ml-2">Excluir</button>
+                        </td>
                     `;
                     tableBody.appendChild(row);
                 });
             } else {
-                tableBody.innerHTML = '<tr><td colspan="3" class="text-center p-4 text-gray-500">Nenhuma música encontrada.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="4" class="text-center p-4 text-gray-500">Nenhuma música encontrada.</td></tr>';
             }
         }
+        async function deleteSong(id) {
+            if (!confirm('Tem certeza que deseja excluir esta música?')) {
+                return;
+            }
+            
+            const response = await fetch('http://localhost/Abreu-Musics/src/delete_song.php?id=${id}', {
+                method: 'DELETE'
+            });
+            
+            const result = await response.json();
+            alert(result.mensagem);
+            fetchSongs();
+        }
+
         document.addEventListener('DOMContentLoaded', fetchSongs);
     </script>    
 </body>
