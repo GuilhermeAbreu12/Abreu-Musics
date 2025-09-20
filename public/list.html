@@ -23,7 +23,7 @@
     </main>
     <script>
         async function fetchSongs(){
-            const response = await fetch('http://127.0.0.1:5500/src/list_songs.php');
+            const response = await fetch('http://localhost/Abreu-Musics/src/list_songs.php');
             const result = await response.json();
             const tableBody = document.getElementById('songs-table-body');
             tableBody.innerHTML = '';
