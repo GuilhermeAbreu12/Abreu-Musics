@@ -12,8 +12,8 @@ if (!$id) {
 
 try {
     $sql = "DELETE FROM songs WHERE id = ?";
-    $stmt = $pdo -> prepare($sql);
-    $stmt -> execute([$id]);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id]);
 
     if ($stmt -> rowCount()) {
         echo json_encode(['mensagem' => 'Música excluida com sucesso!']);
