@@ -3,10 +3,15 @@ require_once('../config/database.php');
 
 header('Content-Type: application/json');
 
-$id = $_GET['id'] ?? null;
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!$id || !isset($data['titulo'], $data['artista'])) {
+$id = $data['id'] ?? null;
+$titulo = $data['titulo'] ?? null;
+$artista = $data['artista'] ?? null;
+$album = $data['album'] ?? null;
+$caminho_arquivo = $data['caminho_arquivo'] ?? null;
+
+if (!$id || !$titulo || !$artista) {
     http_response_code(400);
     echo json_encode(['mensagem' => 'Dados inválidos. ID, título e artista são obrigatórios.']);
     exit;
@@ -14,16 +19,16 @@ if (!$id || !isset($data['titulo'], $data['artista'])) {
 
 try {
     $sql = "UPDATE songs SET titulo = ?, artista = ?, album = ?, caminho_arquivo = ? WHERE id = ?";
-    $stmt = $pdo -> prepare($sql);
+    $stmt = $pdo->prepare($sql);
     $stmt -> execute([
-        $data['titulo'],
-        $data['artista'],
-        $data['album'] ?? null,
-        $data['caminho_arquivo'] ?? null,
+        $titulo,
+        $artista,
+        $album,
+        $caminho_arquivo,
         $id
     ]);
     
-    if ($stmt -> rowCount()){
+    if ($stmt->rowCount()){
         echo json_encode(['mensagem' => 'Música atualizada com sucesso!']);
     } else {
         http_response_code(404);
