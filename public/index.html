@@ -33,27 +33,6 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('add-song-form').addEventListener('submit', async (e) =>{
-            e.preventDefault();
-            const form = e.target;
-            const data = {
-                titulo: form.titulo.value,
-                artista: form.artista.value,
-                album: form.album.value,
-                caminho_arquivo: form.caminho.value
-            };
-
-            const response = await fetch('http://localhost/Abreu-Musics/src/create_song.php', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            });
-
-            const result = await response.json();
-            alert(result.mensagem);
-            form.reset();
-        });
     </script>
 </body>
 </html>
