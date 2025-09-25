@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abreu Musics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-800 text-white p-8">
+    <div class="container mx-auto max-w-4xl">
+        <h1 class="text-4xl font-bold text-center text-teal-400 mb-8">Gerenciador de músicas</h1>
+        <h2 class="text-2xl font-bold mb-4">Adicionar Nova Música</h2>
+        
+        <!-- Formulário de cadastro -->
+        <form id="add-song-form" class="bg-gray-700 p-6 rounded-lg shadow-lg mb-8" method="post">
+            <div class="mb-4">
+                <label for="titulo" class="block text-sm font-medium mb-1">Título</label>
+                <input type="text" id="titulo" name="titulo" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="artista" class="block text-sm font-medium mb-1">Artista</label>
+                <input type="text" id="artista" name="artista" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="album" class="block text-sm font-medium mb-1">Álbum</label>
+                <input type="text" id="album" name="album" class="w-full p-2 rounded bg-gray-600 border border-gray-500">
+            </div>
+            <div class="mb-4">
+                <label for="caminho" class="block text-sm font-medium mb-1">Caminho do Arquivo</label>
+                <input type="text" id="caminho" name="caminho" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+            </div>
+            <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+                Salvar música
+            </button>
+        </form>
+        <h2 class="text-2xl font-bold mb-4">Minha Playlist</h2>
+        
+        <div class="container mx-auto max-w-4xl">
+            <div class="mb-4">
+                <input type="search" id="search-input" placeholder="Buscar por título ou artista..." class="w-full p-2 rounded bg-gray-600 border border-gray-500 text-white">
+            </div>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg shadow-lg mb-8 flex items-center justify-between">
+            <audio id="audio-player" src="" class="hidden"></audio>
+            <div id="player-info" class="text-sm">
+                <span class="font-bold" id="player-title">Nenhuma música selecionada</span>
+                <span class="text-gray-400" id="player-artist"></span>
+            </div>
+            
+            <div class="flex items-center">
+                <button id="play-button" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>
+                </button>
+                <button id="pause-button" class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7v6l5-3-5-3z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+            <table class="w-full text-left table-auto">
+                <thead>
+                    <tr class="text-gray-400">
+                        <th class="p-3 font-semibold">Título</th>
+                        <th class="p-3 font-semibold">Artista</th>
+                        <th class="p-3 font-semibold">Álbum</th>
+                        <th class="p-3 font-semibold">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="songs-table-body">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal de edição das músicas -->
+    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">Editar Música</h2>
+            <form id="edit-song-form">
+                <input type="hidden" id="edit-id">
+                <div class="mb-4">
+                    <label for="edit-titulo" class="block text-sm font-medium mb-1">Título</label>
+                    <input type="text" id="edit-titulo" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="edit-artista" class="block text-sm font-medium mb-1">Artista</label>
+                    <input type="text" id="edit-artista" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="edit-album" class="block text-sm font-medium mb-1">Álbum</label>
+                    <input type="text" id="edit-album" class="w-full p-2 rounded bg-gray-600 border border-gray-500">
+                </div>
+                <div class="mb-4">
+                    <label for="edit-caminho" class="block text-sm font-medium mb-1">Caminho do Arquivo</label>
+                    <input type="text" id="edit-caminho" class="w-full p-2 rounded bg-gray-600 border border-gray-500" required>
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" id="close-edit-modal" class="mr-2 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js" defer></script>    
+
+</body>
+</html>
